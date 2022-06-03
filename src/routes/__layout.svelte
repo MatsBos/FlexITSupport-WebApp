@@ -1,13 +1,17 @@
 <script>
 	import '../app.css';
+	import Box from './index.svelte'
 	import { slide, scale } from 'svelte/transition';
 	import { clickOutside } from '../lib/click_outside.js';
 
+	let logoMobilec = false;
 	let openedProfileDropdown = false;
 	let openedMobileDropdown = false;
 </script>
 
-<nav class="bg-gray-800">
+
+
+<nav  class="bg-gray-800 backdrop-blur top-0 sticky z-10 ">
 	<div class="relative w-auto flex items-center justify-center h-16 md:h-24 md:px-6 lg:px-6">
 		<div class="md:hidden absolute left-1">
 			<!-- Mobile menu button-->
@@ -43,7 +47,7 @@
 			</button>
 		</div>
 
-		<div class="md:absolute md:left-5">
+		<div class="md:absolute md:left-5 {!logoMobilec ? 'hidden' : 'block'}">
 			<img class="h-10 md:h-12 " src="/logo_full/svg/flexit-white-transparent.svg" alt="Workflow" />
 		</div>
 
@@ -149,9 +153,12 @@
 
 <slot />
 
+
 <style>
+@import url('https://fonts.googleapis.com/css2?family=Radio+Canada&display=swap');
+  
 	.nav-btn {
-		@apply bg-transparent text-lg text-white px-3 py-3 rounded-md;
+		@apply bg-transparent font-semibold text-lg text-white px-3 py-3 rounded-md;
 	}
 
 	.nav-btn:hover {
