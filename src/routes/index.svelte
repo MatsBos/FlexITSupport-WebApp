@@ -4,7 +4,7 @@
 
 	let y;
 	let ready = false;
-	export let logoMobile = false;
+	let logoMobile = false;
 	let slogan;
 
 	onMount(() => {

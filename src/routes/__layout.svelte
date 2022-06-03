@@ -47,7 +47,7 @@
 			</button>
 		</div>
 
-		<div class="md:absolute md:left-5 {!logoMobilec ? 'hidden' : 'block'}">
+		<div class="md:absolute md:left-5">
 			<img class="h-10 md:h-12 " src="/logo_full/svg/flexit-white-transparent.svg" alt="Workflow" />
 		</div>
 
