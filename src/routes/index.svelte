@@ -1,68 +1,114 @@
 <script>
-	import { scale, fly, slide } from 'svelte/transition';
+	import { fade, fly, slide } from 'svelte/transition';
 	import { onMount } from 'svelte';
 
 	let y;
-	let ready = false;
+	let switched = false;
+	let flyIn = false;
 	let logoMobile = false;
 	let slogan;
 
 	onMount(() => {
-		ready = true;
+		switched = true;
 	});
 
 	let prevScroll = 0;
 	function onScroll(scrollVal) {
 		slogan = document.getElementById('slogan').getBoundingClientRect().top;
-		
+
 		if (scrollVal > 2 && scrollVal < 9) {
 			if (prevScroll > scrollVal) {
-				ready = false;
-				ready = true;
+				switched = false;
+				switched = true;
 				scrollVal = 0;
 			}
 
 			prevScroll = scrollVal;
 		}
 
-
-		if(slogan > 10){
+		if (slogan > 10) {
 			logoMobile = true;
-		}else{
+		} else {
 			logoMobile = false;
 		}
 	}
-
-	
-	
 </script>
 
-<div class="h-full grid">
-	{#if ready}
-		<div class="place-items-center grid py-10 z-0">
+<div class="h-full grid ">
+	{#if !switched}
+	<div class="place-items-center grid pt-10 z-0">
+		<img
+			out:fade="{{ duration: 100 }}"
+			class="w-2/6"
+			src="/logo_full/svg/flexit-dark-transparent-top.svg"
+			alt="flexit-logo-dark-transparent" />
+
+		<img
+			out:fade="{{ duration: 100 }}"
+			id="slogan"
+			class="w-2/6"
+			src="/logo_full/svg/flexit-dark-transparent-bottom.svg"
+			alt="flexit-logo-dark-transparent" />
+
+		<h1
+			out:fade="{{ duration: 100 }}"
+			class="font-bold flex justify-center pt-10"
+			style="font-size: 4vw;">
+			Unlimited Flexible IT Support
+		</h1>
+	</div>
+	{:else}
+		<div class="place-items-center grid pt-10 z-0 ">
 			<img
-				in:fly="{{ duration: 1000, y: -100, delay: 100 }}"
+				in:fly="{{ duration: 1000, y: -100, delay: 200 }}"
 				class="w-2/6"
 				src="/logo_full/svg/flexit-dark-transparent-top.svg"
 				alt="flexit-logo-dark-transparent" />
 
 			<img
 				id="slogan"
-				in:fly="{{ duration: 1000, y: 100, delay: 100 }}"
+				in:fly="{{ duration: 1000, y: 100, delay: 200 }}"
 				class="w-2/6"
 				src="/logo_full/svg/flexit-dark-transparent-bottom.svg"
 				alt="flexit-logo-dark-transparent" />
+
+			<h1
+				in:fly="{{ duration: 1000, y: 100, delay: 700 }}"
+				class="font-bold flex justify-center pt-10"
+				style="font-size: 4vw;">
+				Unlimited Flexible IT Support
+			</h1>
 		</div>
+	{/if}
+</div>
+<!-- 
+<div class="h-full grid ">
+	<div class="place-items-center grid py-10 z-0">
+	{#if switched}
+		
+			<img
+				in:fly="{{ duration: 1000, y: -100, delay: 1000 }}"
+				class="w-2/6"
+				src="/logo_full/svg/flexit-dark-transparent-top.svg"
+				alt="flexit-logo-dark-transparent" />
+
+			<img
+				id="slogan"
+				in:fly="{{ duration: 1000, y: 100, delay: 1000 }}"
+				class="w-2/6"
+				src="/logo_full/svg/flexit-dark-transparent-bottom.svg"
+				alt="flexit-logo-dark-transparent" />
+		
 
 		<h1
-			in:fly="{{ duration: 1000, y: 100, delay: 700 }}"
-			on:introend="{() => (ready = false)}"
+			in:fly="{{ duration: 1000, y: 100, delay: 1700 }}"
+			on:introend="{() => (flyIn = true)}"
 			class="font-bold flex justify-center"
 			style="font-size: 4vw;">
 			Unlimited Flexible IT Support
 		</h1>
-	{:else}
-		<div class="place-items-center grid py-10 z-0">
+	{:else if !flyIn}
+		
 			<img
 				class="w-2/6"
 				src="/logo_full/svg/flexit-dark-transparent-top.svg"
@@ -73,13 +119,14 @@
 				class="w-2/6"
 				src="/logo_full/svg/flexit-dark-transparent-bottom.svg"
 				alt="flexit-logo-dark-transparent" />
-		</div>
+	
 
 		<h1 class="font-bold flex justify-center" style="font-size: 4vw;">
 			Unlimited Flexible IT Support
 		</h1>
 	{/if}
 </div>
+</div> -->
 
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 300"
 	><path
