@@ -1,17 +1,41 @@
 <script>
 	import '../app.css';
-	import Box from './index.svelte'
-	import { slide, scale } from 'svelte/transition';
+	import Body from './index.svelte';
+	import { slide, scale, fade } from 'svelte/transition';
 	import { clickOutside } from '../lib/click_outside.js';
 
-	let logoMobilec = false;
+
+	$: innerWidth = 0
+
+	let logoMobile;
+	let slogan;
+
+	let y;
+	function onScroll(scrollVal) {
+		slogan = document.getElementById('slogan').getBoundingClientRect().top;
+
+		/*if (scrollVal > 2 && scrollVal < 9) {
+			if (prevScroll > scrollVal) {
+				loaded = false;
+				loaded = true;
+				scrollVal = 0;
+			}
+
+			prevScroll = scrollVal;
+		}*/
+		
+		if (slogan < 10) {
+			logoMobile = true;
+		} else {
+			logoMobile = false;
+		}
+	}
+
 	let openedProfileDropdown = false;
 	let openedMobileDropdown = false;
 </script>
 
-
-
-<nav  class="bg-gray-800 backdrop-blur top-0 sticky z-10 ">
+<nav class="bg-gray-800 backdrop-blur top-0 sticky z-10 ">
 	<div class="relative w-auto flex items-center justify-center h-16 md:h-24 md:px-6 lg:px-6">
 		<div class="md:hidden absolute left-1">
 			<!-- Mobile menu button-->
@@ -48,7 +72,18 @@
 		</div>
 
 		<div class="md:absolute md:left-5">
-			<img class="h-10 md:h-12 " src="/logo_full/svg/flexit-white-transparent.svg" alt="Workflow" />
+			{#if !logoMobile && innerWidth < 768}
+				<img
+					class="hidden h-10 md:h-12 md:block"
+					src="/logo_full/svg/flexit-white-transparent.svg"
+					alt="Workflow" />
+			{:else}
+				<img
+					in:fade="{{ duration: 400, start: 0.5 }}"
+					class="h-10 md:h-12"
+					src="/logo_full/svg/flexit-white-transparent.svg"
+					alt="Workflow" />
+			{/if}
 		</div>
 
 		<div class="hidden md:block">
@@ -117,7 +152,6 @@
 				</div> -->
 	</div>
 
-
 	{#if openedMobileDropdown}
 		<!-- Mobile menu, show/hide based on menopenedMobileDropdownu state. -->
 		<div
@@ -151,19 +185,20 @@
 	{/if}
 </nav>
 
-<slot />
+<Body bind:logoMobile />
 
+<svelte:window bind:scrollY="{y}" bind:innerWidth on:scroll="{onScroll(y)}" />
 
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Radio+Canada&display=swap');
-  
+	@import url('https://fonts.googleapis.com/css2?family=Radio+Canada&display=swap');
+
 	.nav-btn {
 		@apply bg-transparent font-semibold text-lg text-white px-3 py-3 rounded-md;
 	}
 
 	.nav-btn:hover {
 		animation-name: btn-hover;
-		animation-duration: 400ms;
+		animation-duration: 100ms;
 		background-color: #69bac9;
 		transform: scale(1.09);
 	}
@@ -176,6 +211,5 @@
 			transform: scale(1.09);
 			background-color: #69bac9;
 		}
-		
 	}
 </style>
