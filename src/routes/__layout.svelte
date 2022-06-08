@@ -5,7 +5,7 @@
 	import { clickOutside } from '../lib/click_outside.js';
 
 
-	$: innerWidth = 0
+	$: innerWidth = 0;
 
 	let logoMobile;
 	let slogan;
@@ -13,16 +13,6 @@
 	let y;
 	function onScroll(scrollVal) {
 		slogan = document.getElementById('slogan').getBoundingClientRect().top;
-
-		/*if (scrollVal > 2 && scrollVal < 9) {
-			if (prevScroll > scrollVal) {
-				loaded = false;
-				loaded = true;
-				scrollVal = 0;
-			}
-
-			prevScroll = scrollVal;
-		}*/
 		
 		if (slogan < 10) {
 			logoMobile = true;
@@ -35,7 +25,7 @@
 	let openedMobileDropdown = false;
 </script>
 
-<nav class="bg-gray-800 backdrop-blur top-0 sticky z-10 ">
+<nav class="bg-zinc-900 backdrop-blur top-0 sticky z-10">
 	<div class="relative w-auto flex items-center justify-center h-16 md:h-24 md:px-6 lg:px-6">
 		<div class="md:hidden absolute left-1">
 			<!-- Mobile menu button-->
@@ -185,7 +175,7 @@
 	{/if}
 </nav>
 
-<Body bind:logoMobile />
+<Body bind:logoMobile/>
 
 <svelte:window bind:scrollY="{y}" bind:innerWidth on:scroll="{onScroll(y)}" />
 
